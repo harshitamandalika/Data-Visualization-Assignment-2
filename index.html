@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hong Kong Temperature Visualization</title>
+    
+    <!-- Load D3.js Library -->
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    
+    <!-- Link to External CSS for Styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Hong Kong Temperature Visualization</h2>
+
+    <!-- Button to Toggle Between Level 1 and Level 2 -->
+    <button id="toggleButton">Switch to Level 2</button>
+
+    <!-- Level 1 Container: Matrix View Visualization -->
+    <div id="level1Container">
+        <h3>Level 1</h3>
+        
+        <!-- Button to Toggle Between Max and Min Temperature -->
+        <button id="toggleTempLevel1">Show Min Temperature</button>
+        
+        <!-- SVG Container for Matrix View -->
+        <svg id="matrixView"></svg>
+    </div>
+
+    <!-- Level 2 Container: Matrix View Visualization with daily trends -->
+    <div id="level2Container" style="display: none;">
+        <h3>Level 2</h3>
+        
+        <!-- Button to Toggle Between Max and Min Temperature -->
+        <button id="toggleTempLevel2">Show Min Temperature</button>
+        
+        <!-- SVG Container for Line Chart -->
+        <svg id="lineChart"></svg>
+        
+        <!-- Legend for the Line Chart -->
+        <div id="legend"></div>
+    </div>
+
+    <!-- Import JavaScript Files for Level 1 and Level 2 Visualizations -->
+    <script src="level1.js"></script>
+    <script src="level2.js"></script>
+
+    <!-- JavaScript for Toggling Between Level 1 and Level 2 -->
+    <script>
+        document.getElementById("toggleButton").addEventListener("click", function () {
+            const level1 = document.getElementById("level1Container");
+            const level2 = document.getElementById("level2Container");
+
+            // Toggle visibility of Level 1 and Level 2
+            if (level1.style.display === "none") {
+                level1.style.display = "block";
+                level2.style.display = "none";
+                this.textContent = "Switch to Level 2"; // Update button text
+            } else {
+                level1.style.display = "none";
+                level2.style.display = "block";
+                this.textContent = "Switch to Level 1"; // Update button text
+            }
+        });
+    </script>
+</body>
+</html>

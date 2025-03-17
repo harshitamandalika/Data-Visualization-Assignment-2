@@ -1,0 +1,22 @@
+/* Set global font style and center align text */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* Tooltip styling for displaying temperature information */
+.tooltip {
+    position: absolute; 
+    background: rgba(0, 0, 0, 0.7); 
+    color: white; 
+    padding: 5px; 
+    border-radius: 5px; 
+    font-size: 12px; 
+    pointer-events: none; 
+}
+
+/* Center the SVG visualizations */
+#matrixView, #lineChart {
+    margin: auto; 
+    display: block; 
+}
