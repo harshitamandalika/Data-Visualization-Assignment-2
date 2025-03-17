@@ -139,11 +139,16 @@ function drawAxes(svg, xScale, yScale) {
 function drawTemperatureLegend(svg, width, colorScale) {
     svg.selectAll(".legend-group").remove(); // Remove old legend if any
 
-    const legendGroup = svg.append("g").attr("class", "legend-group").attr("transform", `translate(${width + 20},20)`);
+    const legendGroup = svg.append("g")
+        .attr("class", "legend-group")
+        .attr("transform", `translate(${width + 20},20)`);
 
-    // Define static min and max temperature values
+    // Define temperature values for legend stops
     const minTemp = 3;  
-    const maxTemp = 37;  
+    const midTemp1 = 12;  // Cool
+    const midTemp2 = 21;  // Mild
+    const midTemp3 = 30;  // Warm
+    const maxTemp = 37;   // Hottest
 
     // Create a gradient for the legend
     const defs = legendGroup.append("defs");
@@ -152,23 +157,26 @@ function drawTemperatureLegend(svg, width, colorScale) {
         .attr("x1", "0%").attr("x2", "0%")
         .attr("y1", "100%").attr("y2", "0%");
 
-    // Define color stops dynamically for smooth transitions
-    const numStops = 6;
-    for (let i = 0; i <= numStops; i++) {
-        let t = i / numStops;
-        let tempValue = minTemp + t * (maxTemp - minTemp);
-        gradient.append("stop")
-            .attr("offset", `${t * 100}%`)
-            .attr("stop-color", colorScale(tempValue));
-    }
+    // Define temperature color stops
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", colorScale(minTemp));  
+    gradient.append("stop").attr("offset", "25%").attr("stop-color", colorScale(midTemp1)); 
+    gradient.append("stop").attr("offset", "50%").attr("stop-color", colorScale(midTemp2)); 
+    gradient.append("stop").attr("offset", "75%").attr("stop-color", colorScale(midTemp3)); 
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", colorScale(maxTemp)); 
 
     // Draw color bar for legend
     legendGroup.append("rect")
         .attr("width", 20)
-        .attr("height", 150)
+        .attr("height", 135)
         .style("fill", "url(#tempGradientLevel1)");
 
-    // Add labels for min and max temperature
-    legendGroup.append("text").attr("x", -10).attr("y", 165).text(`Low Temp (${minTemp}°C)`);
-    legendGroup.append("text").attr("x", -10).attr("y", -5).text(`High Temp (${maxTemp}°C)`);
+    // Add labels for min, max, and intermediate temperatures
+    const labelXOffset = 30; // Shift text further right
+    const fontSize = "10px";
+
+    legendGroup.append("text").attr("x", labelXOffset).attr("font-size", fontSize).attr("y", 130).text(`${minTemp}°C`);  
+    legendGroup.append("text").attr("x", labelXOffset).attr("font-size", fontSize).attr("y", 100).text(`${midTemp1}°C`); 
+    legendGroup.append("text").attr("x", labelXOffset).attr("font-size", fontSize).attr("y", 70).text(`${midTemp2}°C`);  
+    legendGroup.append("text").attr("x", labelXOffset).attr("font-size", fontSize).attr("y", 40).text(`${midTemp3}°C`);  
+    legendGroup.append("text").attr("x", labelXOffset).attr("font-size", fontSize).attr("y", 10).text(`${maxTemp}°C`);   
 }

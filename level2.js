@@ -159,14 +159,20 @@ function drawTrendLines(svg, groupedDataDaily, xScale, yScale) {
     });
 }
 
+// Function to draw the Level2's legend
 function drawLevel2Legend(svg, width, colorScale) {
     svg.selectAll(".legend-group").remove(); // Remove old legend if any
 
-    const legendGroup = svg.append("g").attr("class", "legend-group").attr("transform", `translate(${width + 20},20)`);
+    const legendGroup = svg.append("g")
+        .attr("class", "legend-group")
+        .attr("transform", `translate(${width + 20},20)`);
 
-    // Define min and max temperature values
+    // Define temperature values for legend stops
     const minTemp = 3;  
-    const maxTemp = 37;  
+    const midTemp1 = 12;  
+    const midTemp2 = 21;  
+    const midTemp3 = 30;  
+    const maxTemp = 37;   
 
     // Create a gradient for the legend
     const defs = legendGroup.append("defs");
@@ -175,38 +181,46 @@ function drawLevel2Legend(svg, width, colorScale) {
         .attr("x1", "0%").attr("x2", "0%")
         .attr("y1", "100%").attr("y2", "0%");
 
-    // Generate color stops 
-    const numStops = 6;
-    for (let i = 0; i <= numStops; i++) {
-        let t = i / numStops;
-        let tempValue = minTemp + t * (maxTemp - minTemp);
-        gradient.append("stop")
-            .attr("offset", `${t * 100}%`)
-            .attr("stop-color", colorScale(tempValue));
-    }
+    // Define temperature color stops
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", colorScale(minTemp));  
+    gradient.append("stop").attr("offset", "25%").attr("stop-color", colorScale(midTemp1)); 
+    gradient.append("stop").attr("offset", "50%").attr("stop-color", colorScale(midTemp2)); 
+    gradient.append("stop").attr("offset", "75%").attr("stop-color", colorScale(midTemp3)); 
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", colorScale(maxTemp)); 
 
-    // Draw legend box for temperature gradient
+    // Draw legend box for temperature gradient 
     legendGroup.append("rect")
         .attr("width", 20)
-        .attr("height", 150)
+        .attr("height", 135)  
         .style("fill", "url(#tempGradientLevel2)");
 
-    // Add labels for temperature gradient
-    legendGroup.append("text").attr("x", -10).attr("y", 165).text(`Low Temp (${minTemp}°C)`);
-    legendGroup.append("text").attr("x", -10).attr("y", -5).text(`High Temp (${maxTemp}°C)`);
+    // Add labels for min, max, and intermediate temperatures 
+    const labelXOffset = 30; // Shift text further right
+    const fontSize = "10px"; // Adjust font size 
+
+    legendGroup.append("text").attr("x", labelXOffset).attr("y", 130).attr("font-size", fontSize).text(`${minTemp}°C`);  
+    legendGroup.append("text").attr("x", labelXOffset).attr("y", 100).attr("font-size", fontSize).text(`${midTemp1}°C`); 
+    legendGroup.append("text").attr("x", labelXOffset).attr("y", 70).attr("font-size", fontSize).text(`${midTemp2}°C`);  
+    legendGroup.append("text").attr("x", labelXOffset).attr("y", 40).attr("font-size", fontSize).text(`${midTemp3}°C`);  
+    legendGroup.append("text").attr("x", labelXOffset).attr("y", 10).attr("font-size", fontSize).text(`${maxTemp}°C`);   
+
+    // Trend line legend
+    const trendLineYOffset = 200; 
+    const fontSize2 = "12px"; // Adjust font size 
 
     // Legend for Daily Max Trend Line (Dark Green)
     legendGroup.append("line")
-        .attr("x1", 0).attr("y1", 180).attr("x2", 40).attr("y2", 180)
+        .attr("x1", 0).attr("y1", trendLineYOffset).attr("x2", 40).attr("y2", trendLineYOffset)
         .attr("stroke", "darkgreen").attr("stroke-width", 2);
     legendGroup.append("text")
-        .attr("x", 50).attr("y", 185).text("Daily Max");
+        .attr("x", 50).attr("y", trendLineYOffset + 5).attr("font-size", fontSize2).text("Daily Max");
 
     // Legend for Daily Min Trend Line (Light Green)
     legendGroup.append("line")
-        .attr("x1", 0).attr("y1", 210).attr("x2", 40).attr("y2", 210)
+        .attr("x1", 0).attr("y1", trendLineYOffset + 20).attr("x2", 40).attr("y2", trendLineYOffset + 20)
         .attr("stroke", "lightgreen").attr("stroke-width", 2);
     legendGroup.append("text")
-        .attr("x", 50).attr("y", 215).text("Daily Min");
+        .attr("x", 50).attr("y", trendLineYOffset + 25).attr("font-size", fontSize2).text("Daily Min");
 }
+
 
