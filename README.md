@@ -24,7 +24,7 @@ This visualization allows users to interactively **toggle between levels** and *
 ### **3. Level 2 - Max Temperature View**
 ![Level 2 - Max Temperature](Level2_Max_view.png)
 
-### **4. Level 2 - Min Temperature View **
+### **4. Level 2 - Min Temperature View**
 ![Level 2 - Min Temperature](Level2_Min_view.png)
 
 
