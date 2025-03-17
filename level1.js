@@ -145,10 +145,10 @@ function drawTemperatureLegend(svg, width, colorScale) {
 
     // Define temperature values for legend stops
     const minTemp = 3;  
-    const midTemp1 = 12;  // Cool
-    const midTemp2 = 21;  // Mild
-    const midTemp3 = 30;  // Warm
-    const maxTemp = 37;   // Hottest
+    const midTemp1 = 12;  
+    const midTemp2 = 21;  
+    const midTemp3 = 30;  
+    const maxTemp = 37;   
 
     // Create a gradient for the legend
     const defs = legendGroup.append("defs");
