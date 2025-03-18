@@ -35,5 +35,12 @@ This visualization allows users to interactively **toggle between levels** and *
 4. **Tooltip on hover** shows exact min and max temperature details.
 
 
+## How to run the file?
+1. Download the code file and unzip it.
+2. Open terminal at the downloaded folder.
+3. Run the command: "python3 -m http.server 8000"
+4. In a browser, open: "http://localhost:8000/" 
+
+
 ## Author
 **Harshita Mandalika**
